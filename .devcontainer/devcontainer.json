@@ -1,0 +1,87 @@
+{
+  "name": "Rust Blockchain Development",
+  "image": "mcr.microsoft.com/devcontainers/rust:1-1-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true,
+      "username": "vscode",
+      "userUid": "automatic",
+      "userGid": "automatic"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "ppa": true,
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "installDirectlyFromGitHubRelease": true,
+      "version": "latest"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "vadimcn.vscode-lldb",
+        "serayuzgur.crates",
+        "tamasfe.even-better-toml",
+        "ms-vscode.hexdump",
+        "ms-vscode.vscode-json",
+        "esbenp.prettier-vscode",
+        "ms-vscode.test-adapter-converter",
+        "hbenl.vscode-test-explorer"
+      ],      "settings": {
+        "rust-analyzer.checkOnSave.command": "clippy",
+        "rust-analyzer.cargo.features": "all",
+        "rust-analyzer.cargo.buildScripts.enable": true,
+        "rust-analyzer.procMacro.enable": true,
+        "rust-analyzer.completion.autoimport.enable": true,
+        "rust-analyzer.completion.callable.snippets": "fill_arguments",
+        "rust-analyzer.inlayHints.enable": true,
+        "rust-analyzer.inlayHints.typeHints.enable": true,
+        "rust-analyzer.inlayHints.parameterHints.enable": true,
+        "rust-analyzer.lens.enable": true,
+        "rust-analyzer.lens.run.enable": true,
+        "rust-analyzer.lens.debug.enable": true,
+        "rust-analyzer.lens.implementations.enable": true,
+        "rust-analyzer.lens.references.adt.enable": true,
+        "rust-analyzer.lens.references.enumVariant.enable": true,
+        "rust-analyzer.lens.references.method.enable": true,
+        "rust-analyzer.lens.references.trait.enable": true,
+        "rust-analyzer.semanticHighlighting.strings.enable": true,
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.formatOnPaste": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll": "explicit",
+          "source.organizeImports": "explicit"
+        },
+        "editor.rulers": [100],
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 100,
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "git.enableSmartCommit": true,
+        "git.confirmSync": false,
+        "git.autofetch": true,
+        "extensions.ignoreRecommendations": false,
+        "workbench.colorTheme": "Default Dark Modern",
+        "workbench.iconTheme": "vs-seti"
+      }
+    }
+  },
+  "postCreateCommand": "rustup component add clippy rustfmt llvm-tools-preview && cargo install cargo-audit cargo-deny cargo-tarpaulin",
+  "remoteUser": "vscode",
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+  "runArgs": [
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined"
+  ]
+}

@@ -1,5 +1,5 @@
 [package]
-name = "chain-core"
+name = "chain-network"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
@@ -12,24 +12,32 @@ keywords.workspace = true
 categories.workspace = true
 
 [dependencies]
+# Local dependencies
+chain-core = { path = "../chain-core" }
+
+# Async runtime
+tokio = { workspace = true }
+tokio-util = { workspace = true }
+
+# Networking
+libp2p = { workspace = true }
+
 # Serialization
 serde = { workspace = true }
 serde_json = { workspace = true }
 bincode = { workspace = true }
 
-# Cryptography  
-sha3 = { workspace = true }
-blake3 = { workspace = true }
-secp256k1 = { workspace = true }
-
 # Utilities
-hex = { workspace = true }
-bytes = { workspace = true }
 anyhow = { workspace = true }
 thiserror = { workspace = true }
+bytes = { workspace = true }
+futures = { workspace = true }
+tracing = { workspace = true }
 
-[features]
-default = ["std"]
-std = []
-rlp = []
-scale = []
+# Cryptography for peer identity
+rand = { workspace = true }
+blake3 = { workspace = true }
+chrono = { workspace = true }
+
+[dev-dependencies]
+tempfile = "3.0"

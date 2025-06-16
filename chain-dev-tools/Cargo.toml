@@ -1,5 +1,5 @@
 [package]
-name = "node"
+name = "chain-dev-tools"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true

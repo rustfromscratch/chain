@@ -1,0 +1,43 @@
+# Lefthook configuration for Rust blockchain project
+# Install: gem install lefthook && lefthook install
+
+pre-commit:
+  parallel: false
+  commands:
+    # Format code first
+    format:
+      glob: "*.rs"
+      run: cargo fmt --all
+      stage_fixed: true
+    
+    # Run clippy checks  
+    clippy:
+      glob: "*.rs"
+      run: cargo clippy --workspace --all-targets -- -D warnings
+      
+    # Run tests (optional, can be slow)
+    # test:
+    #   glob: "*.rs" 
+    #   run: cargo test --workspace
+
+pre-push:
+  parallel: true
+  commands:
+    # Run all tests before push
+    test:
+      run: cargo test --workspace
+      
+    # Check for security vulnerabilities
+    audit:
+      run: cargo audit --deny warnings
+      
+    # Check for licensing issues
+    deny:
+      run: cargo deny check licenses
+
+# Skip hooks for merge commits
+skip_output:
+  - meta
+  - summary
+
+colors: true

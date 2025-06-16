@@ -1,5 +1,5 @@
 [package]
-name = "dev-tools"
+name = "chain-rpc"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true

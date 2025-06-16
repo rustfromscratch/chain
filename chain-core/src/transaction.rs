@@ -141,7 +141,7 @@ impl Transaction {
         let message = secp256k1::Message::from_digest_slice(signing_hash.as_bytes())
             .map_err(|e| CoreError::Crypto(e.to_string()))?;
 
-        let sig = secp.sign_ecdsa_recoverable(&message, &secret_key);
+        let sig = secp.sign_ecdsa_recoverable(message, &secret_key);
         let (recovery_id, sig_bytes) = sig.serialize_compact();
 
         // Extract r, s, v
@@ -149,7 +149,7 @@ impl Transaction {
         let mut s = [0u8; 32];
         r.copy_from_slice(&sig_bytes[0..32]);
         s.copy_from_slice(&sig_bytes[32..64]);
-        let v = recovery_id.to_i32() as u8;
+        let v = recovery_id as u8;
 
         self.signature = Some(Signature::new(r, s, v));
         Ok(())
@@ -168,8 +168,7 @@ impl Transaction {
         let secp = secp256k1::Secp256k1::new();
 
         // Recreate signature
-        let recovery_id = secp256k1::ecdsa::RecoveryId::from_i32(signature.v as i32)
-            .map_err(|e| CoreError::Crypto(e.to_string()))?;
+        let recovery_id = secp256k1::ecdsa::RecoveryId::from_u8_masked(signature.v);
 
         let mut sig_bytes = [0u8; 64];
         sig_bytes[0..32].copy_from_slice(&signature.r);
@@ -184,7 +183,7 @@ impl Transaction {
             .map_err(|e| CoreError::Crypto(e.to_string()))?;
 
         let _public_key = secp
-            .recover_ecdsa(&message, &recoverable_sig)
+            .recover_ecdsa(message, &recoverable_sig)
             .map_err(|e| CoreError::Crypto(e.to_string()))?;
 
         Ok(true)
@@ -203,8 +202,7 @@ impl Transaction {
         let secp = secp256k1::Secp256k1::new();
 
         // Recreate signature
-        let recovery_id = secp256k1::ecdsa::RecoveryId::from_i32(signature.v as i32)
-            .map_err(|e| CoreError::Crypto(e.to_string()))?;
+        let recovery_id = secp256k1::ecdsa::RecoveryId::from_u8_masked(signature.v);
 
         let mut sig_bytes = [0u8; 64];
         sig_bytes[0..32].copy_from_slice(&signature.r);
@@ -219,7 +217,7 @@ impl Transaction {
             .map_err(|e| CoreError::Crypto(e.to_string()))?;
 
         let public_key = secp
-            .recover_ecdsa(&message, &recoverable_sig)
+            .recover_ecdsa(message, &recoverable_sig)
             .map_err(|e| CoreError::Crypto(e.to_string()))?;
 
         // Convert public key to address (last 20 bytes of Keccak256 hash)

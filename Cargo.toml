@@ -2,14 +2,14 @@
 resolver = "2"
 members = [
     "chain-core",
-    "consensus", 
-    "network",
-    "db",
-    "vm",
-    "node",
-    "rpc",
-    "cli",
-    "dev-tools"
+    "chain-consensus", 
+    "chain-network",
+    "chain-db",
+    "chain-vm",
+    "chain-node",
+    "chain-rpc",
+    "chain-cli",
+    "chain-dev-tools"
 ]
 
 [workspace.package]
@@ -37,7 +37,7 @@ bincode = "2.0.1"
 # Cryptography
 sha3 = "0.10"
 blake3 = "1.5"
-secp256k1 = { version = "0.29", features = ["recovery", "rand-std"] }
+secp256k1 = { version = "0.31", features = ["recovery", "rand"] }
 ed25519-dalek = { version = "2.0", features = ["rand_core"] }
 rand = "0.9.1"
 
@@ -45,6 +45,7 @@ rand = "0.9.1"
 libp2p = { version = "0.55", features = [
     "tokio",
     "tcp",
+    "dns",
     "noise",
     "yamux", 
     "gossipsub",
@@ -88,8 +89,10 @@ config = "0.15.11"
 # Utilities
 hex = "0.4"
 bytes = "1.0"
+futures = "0.3"
 parking_lot = "0.12"
 dashmap = "6.1.0"
+chrono = { version = "0.4", features = ["serde"] }
 
 [profile.release]
 opt-level = 3
