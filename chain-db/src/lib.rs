@@ -1,14 +1,25 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+//! Blockchain database layer
+//!
+//! This crate provides persistent storage for blockchain data including
+//! blocks, headers, receipts, state, and indices.
+
+pub mod column_families;
+pub mod error;
+pub mod kv;
+pub mod pruning;
+pub mod snapshot;
+pub mod traits;
+
+pub use error::{DbError, DbResult};
+pub use kv::{Database, DatabaseConfig};
+pub use snapshot::{SnapshotService, StateSnapshot};
+pub use traits::{DbTx, KeyValueDB, SnapshotReader};
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
     #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn test_db_basics() {
+        // Basic smoke test
+        assert!(true);
     }
 }

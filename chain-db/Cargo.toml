@@ -12,3 +12,40 @@ keywords.workspace = true
 categories.workspace = true
 
 [dependencies]
+# Local dependencies
+chain-core = { path = "../chain-core" }
+
+# Database backends
+rocksdb = { workspace = true }
+sled = { workspace = true, optional = true }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+bincode = "2.0.1"
+
+# Utilities
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+bytes = { workspace = true }
+parking_lot = { workspace = true }
+
+# Compression
+flate2 = "1.0"
+tar = "0.4"
+
+# Cron for maintenance tasks
+cron = "0.15"
+chrono = { workspace = true }
+
+[features]
+default = ["rocksdb-backend"]
+rocksdb-backend = []
+sled-backend = ["sled"]
+
+[dev-dependencies]
+tempfile = "3.0"

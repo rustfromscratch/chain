@@ -17,9 +17,9 @@ version = "0.1.0"
 edition = "2021"
 authors = ["Rust Chain Team"]
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/your-org/chain"
-homepage = "https://github.com/your-org/chain"
-documentation = "https://docs.rs/chain"
+repository = "https://github.com/rustfromscratch/chain"
+homepage = "https://github.com/rustfromscratch/chain"
+documentation = "https://github.com/rustfromscratch/chain"
 readme = "README.md"
 keywords = ["blockchain", "cryptocurrency", "rust", "p2p"]
 categories = ["cryptography", "network-programming"]
@@ -39,6 +39,7 @@ sha3 = "0.10"
 blake3 = "1.5"
 secp256k1 = { version = "0.31", features = ["recovery", "rand"] }
 ed25519-dalek = { version = "2.0", features = ["rand_core"] }
+curve25519-dalek = "4.1"
 rand = "0.9.1"
 
 # Networking

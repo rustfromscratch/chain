@@ -1,5 +1,4 @@
 //! Blockchain synchronization protocols
-
 use crate::message::{SyncRequest, SyncResponse};
 use crate::{NetworkError, NetworkResult};
 use chain_core::{BlockHeader, Hash};
@@ -317,11 +316,11 @@ mod tests {
     #[test]
     fn test_sync_stats() {
         let mut stats = SyncStats::new();
-
+        
         stats.record_request_sent();
         stats.record_response_received();
         stats.record_headers_synced(5);
-
+        
         assert_eq!(stats.requests_sent, 1);
         assert_eq!(stats.responses_received, 1);
         assert_eq!(stats.headers_synced, 5);
